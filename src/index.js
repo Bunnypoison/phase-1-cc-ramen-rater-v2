@@ -1,80 +1,70 @@
-// index.js
-document.addEventListener(DomContentLoaded,function(){});
 
-const targetUl = document.querySelector('ul#list')
-
-
-
-
-getData ('http://localhost:3000')
-
-
-
-//fetch
-//arrow let myFunction = (a, b) => a * b;
-fetch (url)
-.then(resp=> resp .json())   //! problem here expected '' ??? fixed i forgot the . before json
-.then(renderRamens => renderRamens. forEach(displayRamens)); //should run the renderRoman function that and pass it through the json data that was fetched
-try {error => console.log (error)} //asking for a "try"??
-catch {error => console.log (error)}
+const url = 'http://localhost:3000/ramens'
+const ramenMenu = document.querySelector('#ramen-menu')
+const ramenImage = document.querySelector('.detail-image')
+const ramenName = document.querySelector('.name')
+const ramenRestaurant = document.querySelector('.restaurant')
+const ramenRating = document.querySelector('#rating-display')
+const ramenComment = document.querySelector('#comment-display')
+const ramenForm = document.querySelector('#new-ramen')
 
 
-targetUl.append(li)   //put the ramen on the page
+function getRamens() {
+  return fetch(url)
+  .then(resp => resp.json())
+  .then(ramensData => {
+    ramensData.forEach(ramen => displayRamens(ramen))
+  })
+  .catch(err => console.log(err))
 
-
-function displayRamens (ramenMenu) {
-const li = document.createElement(li)
-const displayRamen = ["ramenMenu"] 
-li.textContent = ramenMenu
-li.addEventListener ('click',function(event)
- const img = document.createElement ('img')   //add elements to the click function
-img.alt = displayRamen
-img.src = ramenMenu.img
-)
 }
 
-const ramenMenuDiv = getElementById('romen-menu')
-const ramenImage = document.createElement('img');
- ramenImage.src = ramen.img
-ramenMenuDiv.append(ramenImage); // send image to the host
 
- function createNewRamen( element) {
- function preventDefault ();
- 
-
- const newRamen = {
-name: element targetName Value
-rating: element targetRating Value
-restaurant: element targetResturant value
-image: element targetImage value
-comment: element target ['new-comment'] value
- };
-
- }
-
-
-// Callbacks
-function handleClick(ramen) {   //<button onclick="myFunction()">Click me</button>
-  <button onclick = Function (ramen) ">Click me< </button">
+const addSubmitListener = () => ramenForm.addEventListener('submit', handleFormSubmit);
+  
+const handleFormSubmit = e => { 
+  e.preventDefault()
+  const newRamen = {
+    name: document.querySelector('#new-name').value,
+    restaurant: document.querySelector('#new-restaurant').value,
+    image: document.querySelector('#new-image').value,
+    rating: document.querySelector('#new-rating').value,
+    comment: document.querySelector('#new-comment').value,
+  }
+  displayRamens(newRamen);
 }
 
-const addSubmitListener = () => {
- const addSubmitListener =() =>{ document. getElementById('myButton'); button.
-}}
+const displayRamens = (ramen) => {
+  const img = document.createElement('img')
+  img.src = ramen.image
+  img.alt = ramen.name
+  img.className = "ramen-menu-items"
+  img.addEventListener("click", e => handleClick(ramen)) 
+  ramenMenu.append(img)
+};
 
+const handleClick = (ramen) => {
+  ramenImage.src = ramen.image
+  ramenImage.alt = ramen.name
+  ramenName.innerText = ramen.name
+  ramenRestaurant.innerText = ramen.restaurant
+  ramenRating.innerText = ramen.rating
+  ramenComment.innerText = ramen.comment
+};
 
 
 const main = () => {
-  // Invoke displayRamens here
+ 
+  getRamens();
   // Invoke addSubmitListener here
+  addSubmitListener();
 }
 
 main()
-
 // Export functions for testing
-export {
-  displayRamens,
-  addSubmitListener,
-  handleClick,
-  main,
-};
+// export {
+//   displayRamens,
+//   addSubmitListener,
+//   handleClick,
+//   main,
+// };
